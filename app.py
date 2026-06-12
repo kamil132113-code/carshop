@@ -1,20 +1,15 @@
+import os
 import psycopg2
 from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
 app.json.ensure_ascii = False
 
-DB = {
-    "host":     "localhost",
-    "port":     5432,
-    "dbname":   "postgres",
-    "user":     "postgres",
-    "password": "kamil1321",
-}
+DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://postgres:kamil1321@localhost:5432/postgres")
 
 
 def get_db():
-    return psycopg2.connect(**DB)
+    return psycopg2.connect(DATABASE_URL)
 
 
 @app.route("/")
